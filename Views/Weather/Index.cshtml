@@ -1,0 +1,54 @@
+﻿@model WeatherForecastApp.Models.WeatherModel
+
+@{
+    Layout = null;  // This line removes the default layout
+    ViewData["Title"] = "Weather Forecast";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="title">Weather Forecast</h1>
+            <p id="typed-output"></p>
+        </header>
+
+        <section class="weather-form">
+            <form asp-action="Index" method="post">
+                <input type="text" id="city" name="city" placeholder="Enter City Name" class="input-field" />
+                <button type="submit" class="submit-btn">Get Weather</button>
+            </form>
+        </section>
+
+        @if (Model != null)
+        {
+            <section class="weather-info">
+                <div class="weather-card">
+                    <h2 class="city-name">@Model.City</h2>
+                    <div class="weather-details">
+                        <p><strong>Temperature:</strong> @Model.Main.Temperature °C</p>
+                        <p><strong>Humidity:</strong> @Model.Main.Humidity%</p>
+                        <p><strong>Condition:</strong> @Model.Weather[0].Description</p>
+                    </div>
+                </div>
+            </section>
+        }
+        else if (ViewBag.Error != null)
+        {
+            <section class="error-message">
+                <p>@ViewBag.Error</p>
+            </section>
+        }
+    </div>
+
+    <script src="~/js/main.js"></script>
+</body>
+</html>
